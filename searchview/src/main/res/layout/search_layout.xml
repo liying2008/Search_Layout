@@ -2,38 +2,52 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:focusableInTouchMode="true"
     android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/search_block"
         android:layout_width="match_parent"
-        android:layout_height="10dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingRight="10dp"
-        >
+        android:paddingRight="10dp">
+
         <ImageView
             android:id="@+id/search_back"
             android:layout_width="38dp"
             android:layout_height="38dp"
             android:layout_gravity="center_vertical"
-            android:padding="10dp"
-            android:src="@drawable/back" />
+            android:contentDescription="@string/image_content_desc_back"
+            android:padding="6dp"
+            android:src="@drawable/ic_arrow_back"
+            android:tint="@color/icon_tint_color_default" />
 
-        <scut.carson_ho.searchview.EditText_Clear
+        <scut.carson_ho.searchview.ClearEditText
             android:id="@+id/et_search"
             android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="264"
-            android:background="@null"
-            android:drawableLeft="@drawable/search"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:drawablePadding="8dp"
+            android:focusable="true"
             android:gravity="start|center_vertical"
+            android:hint="@string/please_input_keyword"
             android:imeOptions="actionSearch"
-            android:singleLine="true"
-            />
+            android:inputType="text"
+            android:minHeight="38dp"
+            android:singleLine="true" />
 
+        <Button
+            android:id="@+id/btn_search"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:text="@string/search"
+            android:textAlignment="center"
+            android:textColor="@color/search_text_color_default"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:visibility="visible" />
     </LinearLayout>
 
     <ScrollView
@@ -48,18 +62,17 @@
             <scut.carson_ho.searchview.SearchListView
                 android:id="@+id/listView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            </scut.carson_ho.searchview.SearchListView>
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/tv_clear"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="#F6F6F6"
+                android:clickable="true"
+                android:focusable="true"
                 android:gravity="center"
-                android:visibility="invisible"
-                android:text="清除搜索历史" />
+                android:text="@string/clear_history"
+                android:visibility="invisible" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

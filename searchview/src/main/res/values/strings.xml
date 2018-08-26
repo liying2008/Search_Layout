@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">SearchView</string>
+    <string name="image_content_desc_back">back</string>
+    <string name="please_input_keyword">输入查询关键字</string>
+    <string name="clear_history">清除搜索历史</string>
+    <string name="search">搜索</string>
 </resources>

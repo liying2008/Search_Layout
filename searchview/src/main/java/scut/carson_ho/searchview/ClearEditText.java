@@ -1,6 +1,8 @@
 package scut.carson_ho.searchview;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
@@ -8,28 +10,30 @@ import android.view.MotionEvent;
 
 /**
  * Created by Carson_Ho on 17/8/10.
+ * Modified by LiYing on 18/8.
  */
 
-public class EditText_Clear extends android.support.v7.widget.AppCompatEditText {
+public class ClearEditText extends android.support.v7.widget.AppCompatEditText {
 
 
     /**
      * 步骤1：定义左侧搜索图标 & 一键删除图标
      */
-    private Drawable clearDrawable,searchDrawable;
+    private Drawable mClearDrawable, mSearchDrawable;
+    private boolean mSearchIconVisible = true;
 
-    public EditText_Clear(Context context) {
+    public ClearEditText(Context context) {
         super(context);
         init();
         // 初始化该组件时，对EditText_Clear进行初始化 ->>步骤2
     }
 
-    public EditText_Clear(Context context, AttributeSet attrs) {
+    public ClearEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public EditText_Clear(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ClearEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
@@ -38,11 +42,13 @@ public class EditText_Clear extends android.support.v7.widget.AppCompatEditText 
      * 步骤2：初始化 图标资源
      */
     private void init() {
-        clearDrawable = getResources().getDrawable(R.drawable.clear);
-        searchDrawable = getResources().getDrawable(R.drawable.search);
+        mClearDrawable = getResources().getDrawable(R.drawable.ic_clear);
+        mSearchDrawable = getResources().getDrawable(R.drawable.ic_search);
+        mClearDrawable.setColorFilter(getResources().getColor(R.color.icon_tint_color_default), PorterDuff.Mode.SRC_IN);
+        mSearchDrawable.setColorFilter(getResources().getColor(R.color.icon_tint_color_default), PorterDuff.Mode.SRC_IN);
 
-        setCompoundDrawablesWithIntrinsicBounds(searchDrawable, null,
-                null, null);
+        setCompoundDrawablesWithIntrinsicBounds(mSearchDrawable, null, null, null);
+
         // setCompoundDrawablesWithIntrinsicBounds(Drawable left, Drawable top, Drawable right, Drawable bottom)介绍
         // 作用：在EditText上、下、左、右设置图标（相当于android:drawableLeft=""  android:drawableRight=""）
         // 注1：setCompoundDrawablesWithIntrinsicBounds（）传入的Drawable的宽高=固有宽高（自动通过getIntrinsicWidth（）& getIntrinsicHeight（）获取）
@@ -53,6 +59,25 @@ public class EditText_Clear extends android.support.v7.widget.AppCompatEditText 
         // 与setCompoundDrawablesWithIntrinsicBounds（）的区别：可设置图标大小
         // 传入的Drawable对象必须已经setBounds(x,y,width,height)，即必须设置过初始位置、宽和高等信息
         // x:组件在容器X轴上的起点 y:组件在容器Y轴上的起点 width:组件的长度 height:组件的高度
+    }
+
+    public void setSearchIconColor(ColorStateList color) {
+        mSearchDrawable.setColorFilter(color.getDefaultColor(), PorterDuff.Mode.SRC_IN);
+    }
+
+    public void setClearIconColor(ColorStateList color) {
+        mClearDrawable.setColorFilter(color.getDefaultColor(), PorterDuff.Mode.SRC_IN);
+    }
+
+    /**
+     * 判断是否显示搜素图标
+     *
+     * @param visible 是否显示搜素图标
+     */
+    public void setSearchIconVisible(boolean visible) {
+        mSearchIconVisible = visible;
+        setCompoundDrawablesWithIntrinsicBounds(visible ? mSearchDrawable : null, null,
+                null, null);
     }
 
 
@@ -83,8 +108,8 @@ public class EditText_Clear extends android.support.v7.widget.AppCompatEditText 
      * 作用：判断是否显示删除图标
      */
     private void setClearIconVisible(boolean visible) {
-        setCompoundDrawablesWithIntrinsicBounds(searchDrawable, null,
-                visible ? clearDrawable : null, null);
+        setCompoundDrawablesWithIntrinsicBounds(mSearchIconVisible ? mSearchDrawable : null, null,
+                visible ? mClearDrawable : null, null);
     }
 
     /**
@@ -96,7 +121,7 @@ public class EditText_Clear extends android.support.v7.widget.AppCompatEditText 
         switch (event.getAction()) {
             // 原理：当手指抬起的位置在删除图标的区域，即视为点击了删除图标 = 清空搜索框内容
             case MotionEvent.ACTION_UP:
-                Drawable drawable = clearDrawable;
+                Drawable drawable = mClearDrawable;
                 if (drawable != null && event.getX() <= (getWidth() - getPaddingRight())
                         && event.getX() >= (getWidth() - getPaddingRight() - drawable.getBounds().width())) {
                     setText("");
@@ -113,7 +138,6 @@ public class EditText_Clear extends android.support.v7.widget.AppCompatEditText 
         }
         return super.onTouchEvent(event);
     }
-
 
 }
 
