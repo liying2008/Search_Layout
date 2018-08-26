@@ -1,5 +1,7 @@
 # SearchLayout
 
+[![Download](https://api.bintray.com/packages/liying2008/SearchView/search-view/images/download.svg) ](https://bintray.com/liying2008/SearchView/search-view/_latestVersion)
+
 >[中文文档](README.md)
 - Original Author：Carson_Ho
 - Modifier: LiYing
@@ -40,7 +42,7 @@ dependencies {
 
 ```xml
 <dependency>
-  <groupId>c.duduhuo</groupId>
+  <groupId>cc.duduhuo</groupId>
   <artifactId>search-view</artifactId>
   <version>1.1.0</version>
   <type>pom</type>
