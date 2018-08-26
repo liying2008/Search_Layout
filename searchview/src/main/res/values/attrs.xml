@@ -1,10 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="Search_View">
-        <attr name="textSizeSearch" format="dimension"  />
-        <attr name="textColorSearch" format="color" />
-        <attr name="textHintSearch" format="string" />
-        <attr name="searchBlockHeight" format="integer" />
+    <declare-styleable name="SearchView">
+        <attr name="searchTextSize" format="dimension" />
+        <attr name="searchTextColor" format="color" />
+        <attr name="searchTextHint" format="string" />
+        <attr name="searchTextBackground" format="reference" />
         <attr name="searchBlockColor" format="color" />
+        <attr name="searchBlockBackground" format="reference" />
+        <attr name="searchBlockHeight" format="dimension" />
+        <attr name="searchButtonText" format="string" />
+        <attr name="searchButtonBackground" format="reference" />
+        <attr name="searchButtonTextColor" format="color" />
+        <attr name="searchButtonTextSize" format="dimension" />
+        <attr name="searchButtonWidth" format="dimension" />
+        <attr name="searchButtonVisible" format="boolean" />
+        <attr name="iconColor" format="color" />
+        <attr name="backIconColor" format="color" />
+        <attr name="searchIconColor" format="color" />
+        <attr name="deleteIconColor" format="color" />
+        <attr name="searchIconVisible" format="boolean" />
+        <attr name="clearHistoryText" format="string" />
+        <attr name="clearHistoryTextColor" format="color" />
+        <attr name="clearHistoryTextSize" format="dimension" />
+        <attr name="clearHistoryTextBackground" format="reference" />
     </declare-styleable>
 </resources>
