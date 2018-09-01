@@ -21,7 +21,9 @@ public class SearchDemo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         // 搜索框组件
-        searchView = (SearchView) findViewById(R.id.search_view);
+        searchView = findViewById(R.id.search_view);
+        // 是否在点击历史条目后启动搜索
+        searchView.startSearchWhenHistoryItemClick = true;
         // 设置点击搜索按键后的操作（通过回调接口）
         // 参数 = 搜索框输入的内容
         searchView.setOnSearchListener(new OnSearchListener() {

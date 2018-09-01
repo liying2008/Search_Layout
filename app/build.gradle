@@ -25,4 +25,5 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:28.0.0-rc01'
     testImplementation 'junit:junit:4.12'
     implementation project(':searchview')
+    // implementation 'cc.duduhuo:search-view:1.1.0'
 }

@@ -10,4 +10,6 @@
     <color name="clear_history_background_color_highlight">#ececec</color>
     <color name="search_text_color_highlight">#888888</color>
     <color name="search_text_color">#606060</color>
+    <color name="history_item_bg_color_highlight">#eeeeee</color>
+    <color name="history_item_bg_color">#ffffff</color>
 </resources>

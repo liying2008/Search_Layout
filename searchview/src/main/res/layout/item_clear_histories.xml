@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<scut.carson_ho.searchview.DrawableCenterTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tv_clear"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:background="@drawable/history_item_bg_default"
+    android:clickable="true"
+    android:drawableLeft="@drawable/ic_clear_histories"
+    android:drawablePadding="10dp"
+    android:drawableStart="@drawable/ic_clear_histories"
+    android:focusable="true"
+    android:gravity="center_vertical"
+    android:text="@string/clear_histories" />
