@@ -11,14 +11,5 @@
         android:id="@+id/search_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:clearHistoryTextSize="14sp"
-        app:iconColor="#888888"
-        app:searchBlockColor="#ffffff"
-        app:searchButtonVisible="false"
-        app:searchIconColor="#b9a48e"
-        app:searchIconVisible="false"
-        app:searchTextBackground="@null"
-        app:searchTextColor="@color/colorPrimary"
-        app:searchTextHint="输入查询关键字"
-        app:searchTextSize="14sp" />
+        app:clearHistoryText="清空搜索历史"/>
 </RelativeLayout>
