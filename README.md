@@ -216,7 +216,7 @@ protected void onCreate(Bundle savedInstanceState) {
 
 # 8. 版本说明
 
-[版本更新说明](CHANGELOG)
+[版本更新说明](CHANGELOG.md)
 
 # 关于原作者
 

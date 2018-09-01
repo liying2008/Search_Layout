@@ -144,7 +144,7 @@ Before you open an issue or create a pull request, please read [Contributing Gu
 
 ## 8. Release
 
-[CHANGELOG](CHANGELOG)
+[CHANGELOG](CHANGELOG.md)
 
 
 
