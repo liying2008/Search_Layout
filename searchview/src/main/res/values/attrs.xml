@@ -8,12 +8,9 @@
         <attr name="searchBlockColor" format="color" />
         <attr name="searchBlockBackground" format="reference" />
         <attr name="searchBlockHeight" format="dimension" />
-        <attr name="searchButtonText" format="string" />
         <attr name="searchButtonBackground" format="reference" />
-        <attr name="searchButtonTextColor" format="color" />
-        <attr name="searchButtonTextSize" format="dimension" />
-        <attr name="searchButtonWidth" format="dimension" />
         <attr name="searchButtonVisible" format="boolean" />
+        <attr name="searchButtonIconColor" format="color" />
         <attr name="iconColor" format="color" />
         <attr name="backIconColor" format="color" />
         <attr name="searchIconColor" format="color" />

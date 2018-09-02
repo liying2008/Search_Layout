@@ -3,7 +3,7 @@
     package="scut.carson_ho.searchview">
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:label="@string/app_name"
         android:supportsRtl="true" />
 

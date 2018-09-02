@@ -32,7 +32,7 @@ There are two ways to  import Library：
 
 ```gradle
 dependencies {
-    implementation 'cc.duduhuo:search-view:1.1.5'
+    implementation 'cc.duduhuo:search-view:1.1.6'
 }
 ```
 
@@ -44,7 +44,7 @@ dependencies {
 <dependency>
   <groupId>cc.duduhuo</groupId>
   <artifactId>search-view</artifactId>
-  <version>1.1.5</version>
+  <version>1.1.6</version>
   <type>pom</type>
 </dependency>
 ```
@@ -54,30 +54,27 @@ dependencies {
 
 - Attributes Description：
 
-| 属性 | 描述 | 类型 | 默认值 |
-| :------:| :------: | :------: |:------: |
-| searchTextSize | 搜索字体大小 | dimension | 14sp |
-| searchTextColor | 搜索字体颜色 | color | #9B9B9B |
-| searchTextHint | 搜索框编辑框提示内容 | string |输入查询关键字 |
-| searchTextBackground | 搜索编辑框背景 | reference | 0 |
-| searchBlockColor | 搜索控件背景颜色 | color | #FFFFFF |
-| searchBlockBackground | 搜索控件背景 | reference | - |
-| searchBlockHeight | 搜索控件高度 | dimension |wrap_content |
-| searchButtonText | 搜索按钮文字 | string |搜索 |
-| searchButtonBackground | 搜索按钮背景 | reference |0 |
-| searchButtonTextColor | 搜索按钮文字颜色 | color |pressed: #888888<br>normal: #606060|
-| searchButtonTextSize | 搜索按钮文字大小 | dimension |14sp |
-| searchButtonWidth | 搜索按钮宽度 | dimension |60dp |
-| searchButtonVisible | 搜索按钮是否可见 | boolean |false |
-| iconColor | 所有图标的颜色 | color |pressed: #848484<br>normal: #555555|
-| backIconColor | 返回图标的颜色 | color |#535353 |
-| searchIconColor | 搜索图标的颜色 | color |#535353 |
-| deleteIconColor | 删除图标的颜色 | color | #535353|
-| searchIconVisible | 搜索图标是否可见 | boolean |true |
-| clearHistoryText | 清除历史记录文字 | string |清空搜索历史 |
-| clearHistoryTextColor | 清除历史记录文字颜色 | color |#606060 |
-| clearHistoryTextSize | 清除历史记录文字大小 | dimension | 14sp|
-| clearHistoryTextBackground | 清除历史记录文字背景 | reference |pressed: #ececec<br>normal: #e2e2e2 |
+|             属性             |     描述     |    类型     |                 默认值                 |
+| :------------------------: | :--------: | :-------: | :---------------------------------: |
+|       searchTextSize       |   搜索字体大小   | dimension |                14sp                 |
+|      searchTextColor       |   搜索字体颜色   |   color   |               #9B9B9B               |
+|       searchTextHint       | 搜索框编辑框提示内容 |  string   |               输入查询关键字               |
+|    searchTextBackground    |  搜索编辑框背景   | reference |                  0                  |
+|      searchBlockColor      |  搜索控件背景颜色  |   color   |               #FFFFFF               |
+|   searchBlockBackground    |   搜索控件背景   | reference |                  -                  |
+|     searchBlockHeight      |   搜索控件高度   | dimension |                46dp                 |
+|   searchButtonBackground   |   搜索按钮背景   | reference |                  0                  |
+|   searchButtonIconColor    |  搜索按钮图标颜色  |   color   |               #878787               |
+|    searchButtonVisible     |  搜索按钮是否可见  |  boolean  |                true                 |
+|         iconColor          |  所有图标的颜色   |   color   |               #878787               |
+|       backIconColor        |  返回图标的颜色   |   color   |               #878787               |
+|      searchIconColor       |  搜索图标的颜色   |   color   |               #878787               |
+|      deleteIconColor       |  删除图标的颜色   |   color   |               #878787               |
+|     searchIconVisible      |  搜索图标是否可见  |  boolean  |                false                |
+|      clearHistoryText      |  清除历史记录文字  |  string   |               清空搜索历史                |
+|   clearHistoryTextColor    | 清除历史记录文字颜色 |   color   |               #606060               |
+|    clearHistoryTextSize    | 清除历史记录文字大小 | dimension |                14sp                 |
+| clearHistoryTextBackground | 清除历史记录文字背景 | reference | pressed: #ececec<br>normal: #e2e2e2 |
 
 
 - Use examples
@@ -103,7 +100,7 @@ protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_search);
     // 搜索框组件
-    searchView = (SearchView) findViewById(R.id.search_view);
+    searchView = findViewById(R.id.search_view);
     // 是否在点击历史条目后启动搜索
     searchView.startSearchWhenHistoryItemClick = true;
     // 设置点击搜索按键后的操作（通过回调接口）
@@ -111,7 +108,7 @@ protected void onCreate(Bundle savedInstanceState) {
     searchView.setOnSearchListener(new OnSearchListener() {
         @Override
         public void onSearch(String keyword) {
-            Toast.makeText(SearchDemo.this, "搜索关键词：" + keyword, Toast.LENGTH_SHORT).show();
+            Toast.makeText(SearchViewDemoActivity.this, "搜索关键词：" + keyword, Toast.LENGTH_SHORT).show();
             // 也可通过 getSearchText() 方法获取搜索框中的内容
             String searchText = searchView.getSearchText();
             System.out.println(searchText);

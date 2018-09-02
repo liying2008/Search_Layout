@@ -12,7 +12,7 @@ import scut.carson_ho.searchview.listener.OnBackListener;
  * Created by Carson_Ho on 17/8/11.
  */
 
-public class SearchDemo extends AppCompatActivity {
+public class SearchViewDemoActivity extends AppCompatActivity {
 
     private SearchView searchView;
 
@@ -29,7 +29,7 @@ public class SearchDemo extends AppCompatActivity {
         searchView.setOnSearchListener(new OnSearchListener() {
             @Override
             public void onSearch(String keyword) {
-                Toast.makeText(SearchDemo.this, "搜索关键词：" + keyword, Toast.LENGTH_SHORT).show();
+                Toast.makeText(SearchViewDemoActivity.this, "搜索关键词：" + keyword, Toast.LENGTH_SHORT).show();
                 // 也可通过 getSearchText() 方法获取搜索框中的内容
                 String searchText = searchView.getSearchText();
                 System.out.println(searchText);

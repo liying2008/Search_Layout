@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 28
@@ -7,8 +6,8 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 28
-        versionCode 4
-        versionName "1.1.5"
+        versionCode 5
+        versionName "1.1.6"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -23,22 +22,12 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:support-v4:28.0.0-rc02'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation 'com.android.support:appcompat-v7:28.0.0-rc01'
-    implementation 'com.android.support:recyclerview-v7:28.0.0-rc01'
+    implementation 'com.android.support:appcompat-v7:28.0.0-rc02'
+    implementation 'com.android.support:recyclerview-v7:28.0.0-rc02'
     testImplementation 'junit:junit:4.12'
 }
-publish {
-    userOrg = 'liying2008'
-    repoName = 'SearchView'
-    groupId = 'cc.duduhuo'
-    artifactId = 'search-view'
-    publishVersion = '1.1.5'
-    desc = 'A SearchView for Android (Improved Version) .'
-    website = 'https://github.com/liying2008/Search_Layout'
-    issueTracker = 'https://github.com/liying2008/Search_Layout/issues'
-    repository = 'https://github.com/liying2008/Search_Layout'
-    licences = ['MIT']
-}
 
+apply from: '../bintray.gradle'

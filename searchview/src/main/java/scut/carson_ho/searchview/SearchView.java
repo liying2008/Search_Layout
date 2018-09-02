@@ -15,7 +15,7 @@ import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -38,7 +38,7 @@ public class SearchView extends LinearLayout implements HistoryAdapter.OnHistory
     private ClearEditText etSearch; // 搜索按键
     private LinearLayout searchBlock; // 搜索框布局
     private ImageView ivBack; // 返回按键
-    private Button btnSearch;   // 搜索按钮
+    private ImageButton ibSearch;   // 搜索按钮
 
 
     // RecyclerView 列表 & 适配器
@@ -84,12 +84,9 @@ public class SearchView extends LinearLayout implements HistoryAdapter.OnHistory
     private int clearHistoryTextBackground;
 
     // 搜索按钮设置
-    private String searchButtonText;
+    private ColorStateList searchButtonIconColor;
     @DrawableRes
     private int searchButtonBackground;
-    private ColorStateList searchButtonTextColor;
-    private float searchButtonTextSize;
-    private float searchButtonWidth;
     private boolean searchButtonVisible;
     /** 当点击历史条目时启动搜索 */
     public boolean startSearchWhenHistoryItemClick = true;
@@ -157,19 +154,29 @@ public class SearchView extends LinearLayout implements HistoryAdapter.OnHistory
         // 图标颜色（返回图标、搜索图标和清除图标）
         iconColor = typedArray.getColorStateList(R.styleable.SearchView_iconColor);
         if (iconColor == null) {
-            iconColor = getResources().getColorStateList(R.color.icon_tint_color_default);
+            iconColor = getResources().getColorStateList(R.color.icon_color_default);
         }
 
         // 搜索图标颜色
         searchIconColor = typedArray.getColorStateList(R.styleable.SearchView_searchIconColor);
+        if (searchIconColor == null) {
+            searchIconColor = iconColor;
+        }
 
         // 返回图标颜色
         backIconColor = typedArray.getColorStateList(R.styleable.SearchView_backIconColor);
+        if (backIconColor == null) {
+            backIconColor = iconColor;
+        }
 
         // 清除图标颜色
         deleteIconColor = typedArray.getColorStateList(R.styleable.SearchView_deleteIconColor);
+        if (deleteIconColor == null) {
+            deleteIconColor = iconColor;
+        }
+
         // 搜索图标可见性
-        searchIconVisible = typedArray.getBoolean(R.styleable.SearchView_searchIconVisible, true);
+        searchIconVisible = typedArray.getBoolean(R.styleable.SearchView_searchIconVisible, false);
 
         // 清除搜索历史文字
         clearHistoryText = typedArray.getString(R.styleable.SearchView_clearHistoryText);
@@ -188,25 +195,15 @@ public class SearchView extends LinearLayout implements HistoryAdapter.OnHistory
         clearHistoryTextBackground = typedArray.getResourceId(R.styleable.SearchView_clearHistoryTextBackground, R.drawable.history_item_bg_default);
 
         // 搜索按钮是否显示
-        searchButtonVisible = typedArray.getBoolean(R.styleable.SearchView_searchButtonVisible, false);
-        // 搜索按钮文字
-        searchButtonText = typedArray.getString(R.styleable.SearchView_searchButtonText);
-        if (searchButtonText == null) {
-            searchButtonText = getResources().getText(R.string.search).toString();
-        }
-        // 搜索按钮文字大小
-        float searchButtonTextSizeDefault = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 14f, getResources().getDisplayMetrics());
-        searchButtonTextSize = typedArray.getDimension(R.styleable.SearchView_searchButtonTextSize, searchButtonTextSizeDefault);
-        // 搜索按钮文字颜色
-        searchButtonTextColor = typedArray.getColorStateList(R.styleable.SearchView_searchButtonTextColor);
-        if (searchButtonTextColor == null) {
-            searchButtonTextColor = getResources().getColorStateList(R.color.search_text_color_default);
-        }
+        searchButtonVisible = typedArray.getBoolean(R.styleable.SearchView_searchButtonVisible, true);
         // 搜索按钮背景颜色
         searchButtonBackground = typedArray.getResourceId(R.styleable.SearchView_searchButtonBackground, 0);
-        // 搜索按钮宽度
-        float searchButtonWidthDefault = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 60F, getResources().getDisplayMetrics());
-        searchButtonWidth = typedArray.getDimension(R.styleable.SearchView_searchButtonWidth, searchButtonWidthDefault);
+        // 搜索按钮图标颜色
+        searchButtonIconColor = typedArray.getColorStateList(R.styleable.SearchView_searchButtonIconColor);
+        if (searchButtonIconColor == null) {
+            searchButtonIconColor = iconColor;
+        }
+
         // 释放资源
         typedArray.recycle();
     }
@@ -226,7 +223,7 @@ public class SearchView extends LinearLayout implements HistoryAdapter.OnHistory
         // 3. 第1次进入时查询所有的历史搜索记录
         queryData("");
 
-        btnSearch.setOnClickListener(new OnClickListener() {
+        ibSearch.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 startSearch();
@@ -303,21 +300,13 @@ public class SearchView extends LinearLayout implements HistoryAdapter.OnHistory
         // 搜索框获得焦点
         etSearch.requestFocus();
 
-        // 设置搜索图标颜色
-        if (searchIconColor != null) {
-            etSearch.setSearchIconColor(searchIconColor);
-        } else if (iconColor != null) {
-            etSearch.setSearchIconColor(iconColor);
-        }
-
+        // 搜索图标的颜色
+        etSearch.setSearchIconColor(searchIconColor);
+        // 搜索图标的可见性
         etSearch.setSearchIconVisible(searchIconVisible);
 
-        // 设置清除图标颜色
-        if (deleteIconColor != null) {
-            etSearch.setClearIconColor(deleteIconColor);
-        } else if (iconColor != null) {
-            etSearch.setClearIconColor(iconColor);
-        }
+        // 清除图标的颜色
+        etSearch.setClearIconColor(deleteIconColor);
 
         // 3. 搜索框背景颜色
         searchBlock = findViewById(R.id.search_block);
@@ -337,26 +326,18 @@ public class SearchView extends LinearLayout implements HistoryAdapter.OnHistory
         // 6. 返回按键
         ivBack = findViewById(R.id.search_back);
 
-        // 设置返回图标颜色
-        if (backIconColor != null) {
-            ivBack.setColorFilter(backIconColor.getDefaultColor());
-        } else if (iconColor != null) {
-            ivBack.setColorFilter(iconColor.getDefaultColor());
-        }
+        // 返回图标的颜色
+        ivBack.setColorFilter(backIconColor.getDefaultColor());
 
         // 搜索按钮
-        btnSearch = findViewById(R.id.btn_search);
+        ibSearch = findViewById(R.id.ib_search);
         if (searchButtonVisible) {
-            LinearLayout.LayoutParams btnSearchParams = (LinearLayout.LayoutParams) btnSearch.getLayoutParams();
-            btnSearch.setVisibility(VISIBLE);
-            btnSearch.setText(searchButtonText);
-            btnSearch.setTextColor(searchButtonTextColor);
-            btnSearch.setTextSize(TypedValue.COMPLEX_UNIT_PX, searchButtonTextSize);
-            btnSearch.setBackgroundResource(searchButtonBackground);
-            btnSearchParams.width = (int) searchButtonWidth;
-            btnSearch.setLayoutParams(btnSearchParams);
+            ibSearch.setVisibility(VISIBLE);
+            ibSearch.setBackgroundResource(searchButtonBackground);
+            // 搜索按钮图标的颜色
+            ibSearch.setColorFilter(searchButtonIconColor.getDefaultColor());
         } else {
-            btnSearch.setVisibility(GONE);
+            ibSearch.setVisibility(GONE);
         }
         // 创建适配器
         adapter = new HistoryAdapter(records);
@@ -378,6 +359,21 @@ public class SearchView extends LinearLayout implements HistoryAdapter.OnHistory
     public String getSearchText() {
         Editable text = etSearch.getText();
         return text != null ? text.toString() : "";
+    }
+
+    /**
+     * 清除当前搜索文本
+     */
+    public void clearCurrentSearchText() {
+        etSearch.setText("");
+    }
+
+    /**
+     * 让搜索框获取焦点
+     */
+    public void focus() {
+        etSearch.setFocusable(true);
+        etSearch.requestFocus();
     }
 
     /**
