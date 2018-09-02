@@ -1,21 +1,20 @@
 package scut.carson_ho.searchview;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.View;
 
 /**
  * =======================================================
  * Author: liying - liruoer2008@yeah.net
  * Datetime: 2018/9/1 14:52
- * Description:
+ * Description: 列表分割线装饰器
  * Remarks:
  * =======================================================
  */
@@ -23,10 +22,14 @@ public class LineDecoration extends RecyclerView.ItemDecoration {
     private Paint mPaint;
     private Drawable mDivider;
     // 分割线高度
-    private int mDividerHeight = 2;
+    private int mDividerHeight;
 
     public LineDecoration(Context context) {
-        mDivider = context.getResources().getDrawable(android.R.drawable.divider_horizontal_dark);
+        mDivider = context.getResources().getDrawable(R.drawable.list_divider);
+        mDividerHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 0.5F, context.getResources().getDisplayMetrics());
+        if (mDividerHeight == 0) {
+            mDividerHeight = 1;
+        }
     }
 
     @Override
@@ -35,11 +38,16 @@ public class LineDecoration extends RecyclerView.ItemDecoration {
         drawHorizontal(c, parent);
     }
 
+    /**
+     * 画水平线
+     * @param c
+     * @param parent
+     */
     private void drawHorizontal(Canvas c, RecyclerView parent) {
         int left = parent.getPaddingLeft();
         int right = parent.getMeasuredWidth() - parent.getPaddingRight();
         int childCount = parent.getChildCount();
-        for (int i = 0; i < childCount; i++) {
+        for (int i = 0; i < childCount - 1; i++) {
             View child = parent.getChildAt(i);
             RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) child.getLayoutParams();
             int top = child.getBottom() + layoutParams.bottomMargin;

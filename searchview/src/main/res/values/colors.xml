@@ -3,6 +3,7 @@
     <color name="colorDefault">#ffffff</color>
     <color name="colorBackground">#f1f0f6</color>
     <color name="colorText">#9b9b9b</color>
+    <color name="icon_color_default">#878787</color>
     <color name="icon_tint_color">#555555</color>
     <color name="icon_tint_color_highlight">#848484</color>
     <color name="clear_history_text_color">#606060</color>
@@ -12,4 +13,5 @@
     <color name="search_text_color">#606060</color>
     <color name="history_item_bg_color_highlight">#eeeeee</color>
     <color name="history_item_bg_color">#ffffff</color>
+    <color name="list_divider_color">#bcbcbc</color>
 </resources>

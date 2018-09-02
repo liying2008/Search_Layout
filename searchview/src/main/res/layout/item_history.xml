@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/history"
         android:paddingLeft="12dp"
+        android:paddingStart="12dp"
         android:src="@drawable/ic_history_icon" />
 
     <TextView
@@ -22,10 +23,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:ellipsize="end"
         android:gravity="center_vertical"
         android:minHeight="?android:attr/listPreferredItemHeightSmall"
         android:paddingLeft="12dp"
         android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+        android:singleLine="true"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
         tools:text="hhhh" />
 

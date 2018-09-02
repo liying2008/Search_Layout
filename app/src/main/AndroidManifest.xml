@@ -3,7 +3,7 @@
     package="scut.carson_ho.search_layout">
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -15,8 +15,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SearchDemo">
-        </activity>
+        <activity android:name=".SearchViewDemoActivity" />
+        <activity
+            android:name=".SearchFragmentDemoActivity"
+            android:theme="@style/SearchFragmentAppTheme" />
     </application>
 
 </manifest>

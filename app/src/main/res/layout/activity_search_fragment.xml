@@ -5,11 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
-    tools:context="scut.carson_ho.search_layout.SearchViewDemoActivity">
+    tools:context="scut.carson_ho.search_layout.SearchFragmentDemoActivity">
 
-    <scut.carson_ho.searchview.SearchView
-        android:id="@+id/search_view"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:clearHistoryText="清空搜索历史" />
+        android:background="@color/colorPrimary"
+        app:titleTextColor="@android:color/white" />
+
 </RelativeLayout>
