@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorDefault">#ffffff</color>
-    <color name="colorBackground">#f1f0f6</color>
     <color name="colorText">#9b9b9b</color>
     <color name="icon_color_default">#878787</color>
     <color name="icon_tint_color">#555555</color>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorDefault">#121212</color>
+    <color name="colorText">#B0B0B0</color>
+    <color name="icon_color_default">#A0A0A0</color>
+    <color name="icon_tint_color">#E0E0E0</color>
+    <color name="icon_tint_color_highlight">#FFFFFF</color>
+    <color name="clear_history_text_color">#B0B0B0</color>
+    <color name="clear_history_background_color">#2C2C2C</color>
+    <color name="clear_history_background_color_highlight">#3D3D3D</color>
+    <color name="search_text_color_highlight">#FFFFFF</color>
+    <color name="search_text_color">#E1E1E1</color>
+    <color name="history_item_bg_color_highlight">#2C2C2C</color>
+    <color name="history_item_bg_color">#1E1E1E</color>
+    <color name="list_divider_color">#333333</color>
+</resources>

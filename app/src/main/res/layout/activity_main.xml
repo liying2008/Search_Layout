@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="scut.carson_ho.search_layout.MainActivity">
+    tools:context="cc.duduhuo.searchview.demo.MainActivity">
 
     <Button
         android:id="@+id/button1"

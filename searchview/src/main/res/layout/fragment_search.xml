@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".SearchFragment">
 
-    <scut.carson_ho.searchview.SearchView
+    <cc.duduhuo.searchview.SearchView
         android:id="@+id/search_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

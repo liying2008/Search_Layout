@@ -1,9 +1,9 @@
-# SearchLayout
+# Search View
 
-[![Download](https://api.bintray.com/packages/liying2008/SearchView/search-view/images/download.svg) ](https://bintray.com/liying2008/SearchView/search-view/_latestVersion)
+![Maven Central Version](https://img.shields.io/maven-central/v/cc.duduhuo/search-view)
 
 - 原作者：Carson_Ho
-- 修改者：LiYing（独毒火）
+- 修改者：liying2008（duduhuo）
 
 **注：关于该开源项目的意见 & 建议可在 Issue 上提出。欢迎 Star ！**
 
@@ -11,11 +11,7 @@
 
 一款**封装了 历史搜索记录功能 & 样式** 的 `Android` 自定义搜索框。
 
->已在 `Github` 开源：[地址：SearchLayout](https://github.com/liying2008/Search_Layout)，欢迎 `Star` ！
-
-
 ![Demo](screenshots/search_view_demo.gif)
-
 
 ## 2. 功能介绍
 
@@ -30,10 +26,10 @@
 
 <table>
 <tr>
-    <th>需求场景</td>
-    <th>功能</td>
-    <th>描述</td>
-    <th>优先级</td>
+    <th>需求场景</th>
+    <th>功能</th>
+    <th>描述</th>
+    <th>优先级</th>
 </tr>
 <tr>
     <td>（<strong>主要</strong>）对某类事物进行精确搜索</td>
@@ -68,7 +64,6 @@
 
 ![Prototype](screenshots/prototype.png)
 
-
 ## 3. 特点
 
 ### 3.1 功能实用
@@ -80,7 +75,7 @@
 
 仅需要简单的 `xml` 属性配置
 
->下面1节会详细介绍其使用方法
+> 下面1节会详细介绍其使用方法
 
 ### 3.3 二次开发成本低
 
@@ -95,71 +90,53 @@
 
 ### 步骤1：引入控件库
 
-主要有 `Gradle` & `Maven` 2种方式：
-
-- 方式1：`Gradle`引入依赖
+通过 `Gradle` 引入依赖
 
 *build.gradle*
 
 ```gradle
 dependencies {
-    implementation 'cc.duduhuo:search-view:1.1.6'
+    implementation("cc.duduhuo:search-view:2.0.0")
 }
 ```
-
-- 方式2：`Maven`引入依赖
-
-*pom.xml*
-
-```xml
-<dependency>
-  <groupId>cc.duduhuo</groupId>
-  <artifactId>search-view</artifactId>
-  <version>1.1.6</version>
-  <type>pom</type>
-</dependency>
-```
-
 
 ### 步骤2：设置搜索框样式
 
 - 自定义属性列表
 
-|             属性             |     描述     |    类型     |                 默认值                 |
-| :------------------------: | :--------: | :-------: | :---------------------------------: |
-|       searchTextSize       |   搜索字体大小   | dimension |                14sp                 |
-|      searchTextColor       |   搜索字体颜色   |   color   |               #9B9B9B               |
-|       searchTextHint       | 搜索框编辑框提示内容 |  string   |               输入查询关键字               |
-|    searchTextBackground    |  搜索编辑框背景   | reference |                  0                  |
-|      searchBlockColor      |  搜索控件背景颜色  |   color   |               #FFFFFF               |
-|   searchBlockBackground    |   搜索控件背景   | reference |                  -                  |
-|     searchBlockHeight      |   搜索控件高度   | dimension |                46dp                 |
-|   searchButtonBackground   |   搜索按钮背景   | reference |                  0                  |
-|   searchButtonIconColor    |  搜索按钮图标颜色  |   color   |               #878787               |
-|    searchButtonVisible     |  搜索按钮是否可见  |  boolean  |                true                 |
-|         iconColor          |  所有图标的颜色   |   color   |               #878787               |
-|       backIconColor        |  返回图标的颜色   |   color   |               #878787               |
-|      searchIconColor       |  搜索图标的颜色   |   color   |               #878787               |
-|      deleteIconColor       |  删除图标的颜色   |   color   |               #878787               |
-|     searchIconVisible      |  搜索图标是否可见  |  boolean  |                false                |
-|      clearHistoryText      |  清除历史记录文字  |  string   |               清空搜索历史                |
-|   clearHistoryTextColor    | 清除历史记录文字颜色 |   color   |               #606060               |
-|    clearHistoryTextSize    | 清除历史记录文字大小 | dimension |                14sp                 |
-| clearHistoryTextBackground | 清除历史记录文字背景 | reference | pressed: #ececec<br>normal: #e2e2e2 |
-
+|             属性             |     描述     |    类型     |              默认值（明亮主题）              |              默认值（黑暗主题）              |
+|:--------------------------:|:----------:|:---------:|:-----------------------------------:|:-----------------------------------:|
+|       searchTextSize       |   搜索字体大小   | dimension |                14sp                 |                14sp                 |
+|      searchTextColor       |   搜索字体颜色   |   color   |               #9B9B9B               |               #E1E1E1               |
+|       searchTextHint       | 搜索框编辑框提示内容 |  string   |               输入查询关键字               |               输入查询关键字               |
+|    searchTextBackground    |  搜索编辑框背景   | reference |                  0                  |                  0                  |
+|      searchBlockColor      |  搜索控件背景颜色  |   color   |               #FFFFFF               |               #121212               |
+|   searchBlockBackground    |   搜索控件背景   | reference |                  -                  |                  -                  |
+|     searchBlockHeight      |   搜索控件高度   | dimension |                46dp                 |                46dp                 |
+|   searchButtonBackground   |   搜索按钮背景   | reference |                  0                  |                  0                  |
+|   searchButtonIconColor    |  搜索按钮图标颜色  |   color   |               #878787               |               #A0A0A0               |
+|    searchButtonVisible     |  搜索按钮是否可见  |  boolean  |                true                 |                true                 |
+|         iconColor          |  所有图标的颜色   |   color   |               #878787               |               #A0A0A0               |
+|       backIconColor        |  返回图标的颜色   |   color   |               #878787               |               #A0A0A0               |
+|      searchIconColor       |  搜索图标的颜色   |   color   |               #878787               |               #A0A0A0               |
+|      deleteIconColor       |  删除图标的颜色   |   color   |               #878787               |               #A0A0A0               |
+|     searchIconVisible      |  搜索图标是否可见  |  boolean  |                false                |                false                |
+|      clearHistoryText      |  清除历史记录文字  |  string   |               清空搜索历史                |               清空搜索历史                |
+|   clearHistoryTextColor    | 清除历史记录文字颜色 |   color   |               #606060               |               #B0B0B0               |
+|    clearHistoryTextSize    | 清除历史记录文字大小 | dimension |                14sp                 |                14sp                 |
+| clearHistoryTextBackground | 清除历史记录文字背景 | reference | pressed: #ececec<br>normal: #e2e2e2 | pressed: #3D3D3D<br>normal: #2C2C2C |
 
 - 使用示例
 
 在 layout 文件中使用，如：
 
 ```xml
-<scut.carson_ho.searchview.SearchView
-    android:id="@+id/search_view"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:clearHistoryText="清空搜索历史"/>
+<cc.duduhuo.searchview.SearchView
+	android:id="@+id/search_view"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	app:clearHistoryText="清空搜索历史" />
 ```
-
 
 ### 步骤3：设置点击键盘上的搜索按键 & 返回按键后的操作
 
@@ -225,10 +202,9 @@ searchFragment.show(getSupportFragmentManager(), SearchFragment.TAG);
 
 # 5. 完整Demo地址
 
-[liying2008的Github地址：SearchLayout](https://github.com/liying2008/Search_Layout)
+https://github.com/liying2008/Search_Layout/tree/master/app
 
-
-# 6.  开源协议
+# 6. 开源协议
 
 [MIT](LICENSE)
 
@@ -251,10 +227,8 @@ searchFragment.show(getSupportFragmentManager(), SearchFragment.TAG);
 - 简书：[http://www.jianshu.com/u/383970bef0a0](http://www.jianshu.com/u/383970bef0a0)
 - 稀土掘金：[https://juejin.im/user/58d4d9781b69e6006ba65edc](https://juejin.im/user/58d4d9781b69e6006ba65edc)
 
-# 关于LiYing(独毒火)
+# 关于修改者
 
 - ID：liying2008
 - E - mail：[liruoer2008@yeah.net](mailto:liruoer2008@yeah.net)
 - Github：[https://github.com/liying2008](https://github.com/liying2008)
-- CSDN：[https://blog.csdn.net/u012939909](https://blog.csdn.net/u012939909)
-- 简书：[https://www.jianshu.com/u/14ab91761183](https://www.jianshu.com/u/14ab91761183)
