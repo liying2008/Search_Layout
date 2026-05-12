@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.os.LocaleListCompat;
 
 import cc.duduhuo.searchview.SearchFragment;
 import cc.duduhuo.searchview.listener.OnSearchListener;
@@ -26,6 +27,7 @@ import cc.duduhuo.searchview.listener.OnSearchListener;
 public class SearchFragmentDemoActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener {
 
     private Button btnThemeToggle;
+    private Button btnLanguageToggle;
     private Toolbar toolbar;
 
     private SearchFragment searchFragment;
@@ -36,6 +38,7 @@ public class SearchFragmentDemoActivity extends AppCompatActivity implements Too
         setContentView(R.layout.activity_search_fragment);
 
         btnThemeToggle = findViewById(R.id.theme_toggle);
+        btnLanguageToggle = findViewById(R.id.language_toggle);
 
         // 获取当前主题
         int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
@@ -43,9 +46,9 @@ public class SearchFragmentDemoActivity extends AppCompatActivity implements Too
 
         // 设置按钮文本
         if (isDarkMode) {
-            btnThemeToggle.setText("切换为明亮主题");
+            btnThemeToggle.setText(R.string.switch_to_light_theme);
         } else {
-            btnThemeToggle.setText("切换为黑暗主题");
+            btnThemeToggle.setText(R.string.switch_to_dark_theme);
         }
 
         // 点击切换亮暗主题
@@ -61,6 +64,21 @@ public class SearchFragmentDemoActivity extends AppCompatActivity implements Too
                 }
                 // 重新启动 Activity 以应用更改
                 recreate();
+            }
+        });
+
+        // 点击切换语言
+        btnLanguageToggle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LocaleListCompat currentAppLocales = AppCompatDelegate.getApplicationLocales();
+                if (currentAppLocales.isEmpty() || "zh".equalsIgnoreCase(currentAppLocales.get(0).getLanguage())) {
+                    // 当前是中文或默认，切换到英文
+                    AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("en"));
+                } else {
+                    // 当前是英文，切换到中文
+                    AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("zh"));
+                }
             }
         });
 

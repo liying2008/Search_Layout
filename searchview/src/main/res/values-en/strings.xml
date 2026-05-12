@@ -1,0 +1,8 @@
+<resources>
+    <string name="image_content_desc_back">Back</string>
+    <string name="please_input_keyword">Enter search keywords</string>
+    <string name="history">Search History</string>
+    <string name="clear_histories">Clear Search History</string>
+    <string name="clear_the_history">Delete this record</string>
+    <string name="search">Search</string>
+</resources>

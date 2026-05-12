@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Search_Layout</string>
+    <string name="switch_theme">Switch Theme</string>
+    <string name="switch_to_dark_theme">Switch to Dark Theme</string>
+    <string name="switch_to_light_theme">Switch to Light Theme</string>
+    <string name="switch_language">Switch Language</string>
+</resources>

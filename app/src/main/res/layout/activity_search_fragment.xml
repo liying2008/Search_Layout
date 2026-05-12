@@ -14,11 +14,29 @@
         android:background="@color/teal_200"
         app:titleTextColor="@android:color/white" />
 
-    <Button
-        android:id="@+id/theme_toggle"
+    <LinearLayout
+        style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="12dp"
-        android:text="切换亮暗主题" />
+        android:orientation="horizontal"
+        android:padding="12dp">
+
+        <Button
+            android:id="@+id/theme_toggle"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/switch_theme" />
+
+        <Button
+            android:id="@+id/language_toggle"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/switch_language" />
+    </LinearLayout>
 </LinearLayout>

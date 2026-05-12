@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Search_Layout</string>
+    <string name="switch_theme">切换亮暗主题</string>
+    <string name="switch_to_dark_theme">切换为黑暗主题</string>
+    <string name="switch_to_light_theme">切换为明亮主题</string>
+    <string name="switch_language">切换语言</string>
 </resources>
