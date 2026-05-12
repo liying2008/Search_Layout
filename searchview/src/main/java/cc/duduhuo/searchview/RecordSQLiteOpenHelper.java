@@ -12,7 +12,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 // 继承自SQLiteOpenHelper数据库类的子类
 public class RecordSQLiteOpenHelper extends SQLiteOpenHelper {
 
-    private static final String NAME = "cc.duduhuo.searchview.db";
+    // 保持数据库文件名不变，为了向后兼容
+    private static final String NAME = "scut.carson_ho.searchview.db";
     private static final Integer VERSION = 1;
 
     RecordSQLiteOpenHelper(Context context) {
