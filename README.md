@@ -70,6 +70,7 @@
 
 - 该搜索框开源库具备除了历史搜索记录功能外，还具备一般的搜索框功能（如一键清空搜索框内容等等）
 - 封装了 **常见的搜索框样式**（如图标、字体、背景等等），使用起来更加方便
+- 支持多个搜索框之间历史记录数据隔离
 
 ### 3.2 使用简单
 
@@ -104,27 +105,40 @@ dependencies {
 
 - 自定义属性列表
 
+**1. color / background**
+
 |             属性             |     描述     |    类型     |              默认值（明亮主题）              |              默认值（黑暗主题）              |
 |:--------------------------:|:----------:|:---------:|:-----------------------------------:|:-----------------------------------:|
-|       searchTextSize       |   搜索字体大小   | dimension |                14sp                 |                14sp                 |
 |      searchTextColor       |   搜索字体颜色   |   color   |               #9B9B9B               |               #E1E1E1               |
-|       searchTextHint       | 搜索框编辑框提示内容 |  string   |               输入查询关键字               |               输入查询关键字               |
 |    searchTextBackground    |  搜索编辑框背景   | reference |                  0                  |                  0                  |
 |      searchBlockColor      |  搜索控件背景颜色  |   color   |               #FFFFFF               |               #121212               |
 |   searchBlockBackground    |   搜索控件背景   | reference |                  -                  |                  -                  |
-|     searchBlockHeight      |   搜索控件高度   | dimension |                46dp                 |                46dp                 |
 |   searchButtonBackground   |   搜索按钮背景   | reference |                  0                  |                  0                  |
 |   searchButtonIconColor    |  搜索按钮图标颜色  |   color   |               #878787               |               #A0A0A0               |
-|    searchButtonVisible     |  搜索按钮是否可见  |  boolean  |                true                 |                true                 |
 |         iconColor          |  所有图标的颜色   |   color   |               #878787               |               #A0A0A0               |
 |       backIconColor        |  返回图标的颜色   |   color   |               #878787               |               #A0A0A0               |
 |      searchIconColor       |  搜索图标的颜色   |   color   |               #878787               |               #A0A0A0               |
 |      deleteIconColor       |  删除图标的颜色   |   color   |               #878787               |               #A0A0A0               |
-|     searchIconVisible      |  搜索图标是否可见  |  boolean  |                false                |                false                |
-|      clearHistoryText      |  清除历史记录文字  |  string   |               清空搜索历史                |               清空搜索历史                |
 |   clearHistoryTextColor    | 清除历史记录文字颜色 |   color   |               #606060               |               #B0B0B0               |
-|    clearHistoryTextSize    | 清除历史记录文字大小 | dimension |                14sp                 |                14sp                 |
 | clearHistoryTextBackground | 清除历史记录文字背景 | reference | pressed: #ececec<br>normal: #e2e2e2 | pressed: #3D3D3D<br>normal: #2C2C2C |
+
+**2. string**
+
+|        属性        |      描述      |   类型   | 默认值（中文） |        默认值（英文）        |
+|:----------------:|:------------:|:------:|:-------:|:---------------------:|
+|  searchTextHint  |  搜索框编辑框提示内容  | string | 输入查询关键字 | Enter search keywords |
+| clearHistoryText |   清除历史记录文字   | string | 清空搜索历史  | Clear Search History  |
+|       tag        | 数据标签（用于数据隔离） | string | `null`  |        `null`         |
+
+**3. 其他**
+
+|          属性          |     描述     |    类型     |  默认值  |
+|:--------------------:|:----------:|:---------:|:-----:|
+|    searchTextSize    |   搜索字体大小   | dimension | 14sp  |
+|  searchBlockHeight   |   搜索控件高度   | dimension | 46dp  | 
+| searchButtonVisible  |  搜索按钮是否可见  |  boolean  | true  |
+|  searchIconVisible   |  搜索图标是否可见  |  boolean  | false |
+| clearHistoryTextSize | 清除历史记录文字大小 | dimension | 14sp  |
 
 - 使用示例
 
@@ -135,7 +149,7 @@ dependencies {
 	android:id="@+id/search_view"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
-	app:clearHistoryText="清空搜索历史" />
+	app:tag="main" />
 ```
 
 ### 步骤3：设置点击键盘上的搜索按键 & 返回按键后的操作
