@@ -20,5 +20,6 @@
         <attr name="clearHistoryTextColor" format="color" />
         <attr name="clearHistoryTextSize" format="dimension" />
         <attr name="clearHistoryTextBackground" format="reference" />
+        <attr name="tag" format="string" />
     </declare-styleable>
 </resources>

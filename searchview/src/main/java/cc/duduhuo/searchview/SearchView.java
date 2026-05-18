@@ -3,8 +3,6 @@ package cc.duduhuo.searchview;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -18,6 +16,8 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
+import androidx.annotation.Nullable;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -26,6 +26,7 @@ import java.util.List;
 import cc.duduhuo.searchview.adapter.HistoryAdapter;
 import cc.duduhuo.searchview.listener.OnBackListener;
 import cc.duduhuo.searchview.listener.OnSearchListener;
+import cc.duduhuo.searchview.persistence.RecordSQLiteOpenHelper;
 
 /**
  * Created by Carson_Ho on 17/8/10.
@@ -46,10 +47,8 @@ public class SearchView extends LinearLayout implements HistoryAdapter.OnHistory
     private RecyclerView recyclerView;
     private HistoryAdapter adapter;
 
-    // 数据库变量
-    // 用于存放历史搜索记录
+    // 数据库工具类
     private RecordSQLiteOpenHelper helper;
-    private SQLiteDatabase db;
 
     // 回调接口
     private OnSearchListener mOnSearchListener;// 搜索按键回调接口
@@ -89,6 +88,8 @@ public class SearchView extends LinearLayout implements HistoryAdapter.OnHistory
     @DrawableRes
     private int searchButtonBackground;
     private boolean searchButtonVisible;
+    // 搜索组件标签，用于实现不同组件数据隔离
+    private String tag;
     /**
      * 当点击历史条目时启动搜索
      */
@@ -104,26 +105,31 @@ public class SearchView extends LinearLayout implements HistoryAdapter.OnHistory
     public SearchView(Context context) {
         super(context);
         this.context = context;
-        init();
+        initView(); //1. 初始化UI组件
+        initDBHelper(tag);
+        registerListener(); //2. 注册监听器
     }
 
     public SearchView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
-        initAttrs(context, attrs); // ->>关注a
-        init();// ->>关注b
+        initAttrs(context, attrs);
+        initView(); //1. 初始化UI组件
+        initDBHelper(tag);
+        registerListener(); //2. 注册监听器
     }
 
     public SearchView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.context = context;
         initAttrs(context, attrs);
-        init();
+        initView(); //1. 初始化UI组件
+        initDBHelper(tag);
+        registerListener(); //2. 注册监听器
     }
 
     /**
-     * 关注a
-     * 作用：初始化自定义属性
+     * 初始化自定义属性
      */
     private void initAttrs(Context context, AttributeSet attrs) {
         // 控件资源名称
@@ -136,7 +142,7 @@ public class SearchView extends LinearLayout implements HistoryAdapter.OnHistory
         // 搜索框字体颜色
         searchTextColor = typedArray.getColorStateList(R.styleable.SearchView_searchTextColor);
         if (searchTextColor == null) {
-            searchTextColor = context.getResources().getColorStateList(R.color.colorText); // 默认颜色 = 灰色
+            searchTextColor = AppCompatResources.getColorStateList(context, R.color.colorText); // 默认颜色 = 灰色
         }
 
         // 搜索框提示内容（String）
@@ -157,7 +163,7 @@ public class SearchView extends LinearLayout implements HistoryAdapter.OnHistory
         // 图标颜色（返回图标、搜索图标和清除图标）
         iconColor = typedArray.getColorStateList(R.styleable.SearchView_iconColor);
         if (iconColor == null) {
-            iconColor = getResources().getColorStateList(R.color.icon_color_default);
+            iconColor = AppCompatResources.getColorStateList(context, R.color.icon_color_default);
         }
 
         // 搜索图标颜色
@@ -192,7 +198,7 @@ public class SearchView extends LinearLayout implements HistoryAdapter.OnHistory
         // 清除搜索历史文字颜色
         clearHistoryTextColor = typedArray.getColorStateList(R.styleable.SearchView_clearHistoryTextColor);
         if (clearHistoryTextColor == null) {
-            clearHistoryTextColor = getResources().getColorStateList(R.color.clear_history_text_color);
+            clearHistoryTextColor = AppCompatResources.getColorStateList(context, R.color.clear_history_text_color);
         }
         // 清除搜索历史文字背景
         clearHistoryTextBackground = typedArray.getResourceId(R.styleable.SearchView_clearHistoryTextBackground, R.drawable.history_item_bg_default);
@@ -206,89 +212,27 @@ public class SearchView extends LinearLayout implements HistoryAdapter.OnHistory
         if (searchButtonIconColor == null) {
             searchButtonIconColor = iconColor;
         }
+        // 数据标签
+        tag = typedArray.getString(R.styleable.SearchView_tag);
 
         // 释放资源
         typedArray.recycle();
     }
 
-
     /**
-     * 关注b
-     * 作用：初始化搜索框
+     * 初始化数据库工具
      */
-    private void init() {
-        // 1. 初始化UI组件->>关注c
-        initView();
+    private void initDBHelper(@Nullable String tag) {
+        // 实例化数据库SQLiteOpenHelper子类对象
+        helper = new RecordSQLiteOpenHelper(context, tag);
 
-        // 2. 实例化数据库SQLiteOpenHelper子类对象
-        helper = new RecordSQLiteOpenHelper(context);
-
-        // 3. 第1次进入时查询所有的历史搜索记录
+        // 第1次进入时查询所有的历史搜索记录
         queryData("");
-
-        ibSearch.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startSearch();
-            }
-        });
-
-        /*
-         * 监听输入键盘更换后的搜索按键
-         * 调用时刻：点击键盘上的搜索键时
-         */
-        etSearch.setOnKeyListener(new View.OnKeyListener() {
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
-                    startSearch();
-                }
-                return false;
-            }
-        });
-
-
-        /*
-         * 搜索框的文本变化实时监听
-         */
-        etSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            // 输入文本后调用该方法
-            @Override
-            public void afterTextChanged(Editable s) {
-                // 每次输入后，模糊查询数据库 & 显示
-                // 注：若搜索框为空,则模糊搜索空字符 = 显示所有的搜索历史
-                String tempName = etSearch.getText().toString();
-                queryData(tempName); // ->>关注1
-            }
-        });
-
-
-        /*
-         * 点击返回按键后的事件
-         */
-        ivBack.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 注：由于返回需求会根据自身情况不同而不同，所以具体逻辑由开发者自己实现，此处仅留出接口
-                if (!(mOnBackListener == null)) {
-                    mOnBackListener.onBack();
-                }
-            }
-        });
     }
 
 
     /**
-     * 关注c：绑定搜索框xml视图
+     * 绑定 SearchView xml视图
      */
     private void initView() {
         // 1. 绑定 R.layout.search_layout 作为搜索框的xml文件
@@ -354,6 +298,66 @@ public class SearchView extends LinearLayout implements HistoryAdapter.OnHistory
         adapter.setClearHistoryTextBackground(clearHistoryTextBackground);
     }
 
+    private void registerListener() {
+        ibSearch.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startSearch();
+            }
+        });
+
+        /*
+         * 监听输入键盘更换后的搜索按键
+         * 调用时刻：点击键盘上的搜索键时
+         */
+        etSearch.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
+                    startSearch();
+                }
+                return false;
+            }
+        });
+
+
+        /*
+         * 搜索框的文本变化实时监听
+         */
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            // 输入文本后调用该方法
+            @Override
+            public void afterTextChanged(Editable s) {
+                // 每次输入后，模糊查询数据库 & 显示
+                // 注：若搜索框为空,则模糊搜索空字符 = 显示所有的搜索历史
+                String tempName = etSearch.getText().toString();
+                queryData(tempName);
+            }
+        });
+
+        /*
+         * 点击返回按键后的事件
+         */
+        ivBack.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 注：由于返回需求会根据自身情况不同而不同，所以具体逻辑由开发者自己实现，此处仅留出接口
+                if (!(mOnBackListener == null)) {
+                    mOnBackListener.onBack();
+                }
+            }
+        });
+    }
+
     /**
      * 获取搜索关键词
      *
@@ -400,7 +404,7 @@ public class SearchView extends LinearLayout implements HistoryAdapter.OnHistory
         }
 
         if (checkDB) {
-            // 2. 点击搜索键后，对该搜索字段在数据库是否存在进行检查（查询）->> 关注1
+            // 2. 点击搜索键后，对该搜索字段在数据库是否存在进行检查（查询）
             String trimmedText = searchText.trim();
             if (!trimmedText.isEmpty()) {
                 boolean hasData = hasData(trimmedText);
@@ -414,26 +418,19 @@ public class SearchView extends LinearLayout implements HistoryAdapter.OnHistory
     }
 
     /**
-     * 关注1
      * 模糊查询数据 & 显示到ListView列表上
      */
-    private void queryData(String tempName) {
-        // 1. 模糊搜索
-        Cursor cursor = helper.getReadableDatabase().rawQuery(
-                "select id as _id, name from records where name like ? order by id desc",
-                new String[]{"%" + tempName + "%"});
-
+    private void queryData(String name) {
         records.clear();
-        while (cursor.moveToNext()) {
-            int nameIndex = cursor.getColumnIndex("name");
-            String name = cursor.getString(nameIndex);
-            records.add(name);
+        if (name == null || name.isEmpty()) {
+            records.addAll(helper.queryAll());
+        } else {
+            records.addAll(helper.queryByName(name));
         }
-        cursor.close();
         adapter.notifyDataSetChanged();
 
         // 当输入框为空 & 数据库中有搜索记录时，显示 "删除搜索记录"按钮
-        if (tempName.equals("") && cursor.getCount() != 0) {
+        if ((name == null || name.isEmpty()) && !records.isEmpty()) {
             adapter.showClearHistoryText();
         } else {
             adapter.hideClearHistoryText();
@@ -441,12 +438,10 @@ public class SearchView extends LinearLayout implements HistoryAdapter.OnHistory
     }
 
     /**
-     * 关注2：清空数据库
+     * 清空数据表
      */
     private void clearData() {
-        db = helper.getWritableDatabase();
-        db.execSQL("delete from records");
-        db.close();
+        helper.clear();
     }
 
     /**
@@ -455,33 +450,21 @@ public class SearchView extends LinearLayout implements HistoryAdapter.OnHistory
      * @param name 要删除的数据
      */
     private void deleteData(String name) {
-        db = helper.getWritableDatabase();
-        db.execSQL("delete from records where name=?", new String[]{name});
-        db.close();
+        helper.deleteByName(name);
     }
 
     /**
-     * 关注3
      * 检查数据库中是否已经有该搜索记录
      */
-    private boolean hasData(String tempName) {
-        // 从数据库中Record表里找到name=tempName的id
-        Cursor cursor = helper.getReadableDatabase().rawQuery(
-                "select id as _id, name from records where name =?", new String[]{tempName});
-        //  判断是否有下一个
-        boolean hasNext = cursor.moveToNext();
-        cursor.close();
-        return hasNext;
+    private boolean hasData(String name) {
+        return helper.has(name);
     }
 
     /**
-     * 关注4
      * 插入数据到数据库，即写入搜索字段到历史搜索记录
      */
-    private void insertData(String tempName) {
-        db = helper.getWritableDatabase();
-        db.execSQL("insert into records(name) values(?)", new String[]{tempName});
-        db.close();
+    private void insertData(String name) {
+        helper.insert(name);
     }
 
     /**
@@ -526,7 +509,7 @@ public class SearchView extends LinearLayout implements HistoryAdapter.OnHistory
 
     @Override
     public void onClear() {
-        // 清空数据库->>关注2
+        // 清空数据库
         clearData();
         queryData("");
     }

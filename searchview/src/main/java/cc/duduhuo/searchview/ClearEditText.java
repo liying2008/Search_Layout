@@ -97,7 +97,7 @@ public class ClearEditText extends AppCompatEditText {
         super.onTextChanged(text, start, lengthBefore, lengthAfter);
         setClearIconVisible(hasFocus() && text.length() > 0);
         // hasFocus()返回是否获得EditTEXT的焦点，即是否选中
-        // setClearIconVisible（） = 根据传入的是否选中 & 是否有输入来判断是否显示删除图标->>关注1
+        // setClearIconVisible（） = 根据传入的是否选中 & 是否有输入来判断是否显示删除图标
     }
 
     @Override
@@ -109,8 +109,7 @@ public class ClearEditText extends AppCompatEditText {
     }
 
     /**
-     * 关注1
-     * 作用：判断是否显示删除图标
+     * 判断是否显示删除图标
      */
     private void setClearIconVisible(boolean visible) {
         setCompoundDrawablesWithIntrinsicBounds(mSearchIconVisible ? mSearchDrawable : null, null,
