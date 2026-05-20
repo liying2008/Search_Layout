@@ -1,5 +1,15 @@
 # 版本更新说明
 
+## v2.0.0 (2026-05-20)
+
+- 工程更新，支持使用新版 Android Studio (*Android Studio Panda 4 | 2025.3.4 Patch 1*) 打开项目；
+- 依赖升级，迁移到 `androidx`；
+- 组件默认UI适配黑暗主题（深色模式）；
+- 组件默认UI支持英文自适应；
+- 添加 `tag` 属性以实现不同搜索组件间的数据隔离；
+- 添加 consumer proguard 文件，防止过度混淆引发UI崩溃；
+- **BREAKING CHANGE**：模块包名从 `scut.carson_ho.searchview` 修改为 `cc.duduhuo.searchview` 。
+
 ## v1.1.6 (2018-09-02)
 
 - 界面调整；
